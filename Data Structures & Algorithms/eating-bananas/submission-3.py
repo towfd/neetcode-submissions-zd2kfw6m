@@ -1,0 +1,19 @@
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        # binary search
+        # 給定兩個索引，去搜尋他的中間值，如果說中間值太小，右邊指標往左一點，太大，左邊指標往右一點
+        # 直到兩個指標相會為止
+        # 時間複雜度O(nlogm) -> n 為pile的大小 logm 為找到hours的時間
+        # 空間複雜度O(1)
+
+        l_idx, r_idx = 1, max(piles)
+        while l_idx <= r_idx:
+            speed = (l_idx + r_idx) // 2
+            hours = 0
+            for p in piles:
+                hours += ((p + speed - 1) // speed)
+            if hours <= h:
+                r_idx = speed - 1
+            else:
+                l_idx = speed + 1
+        return l_idx
